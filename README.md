@@ -83,9 +83,9 @@ pip install pandas numpy scipy sqlalchemy pymysql
 .
 ├── data_pipeline.py     # the pipeline
 ├── input/               # put your raw .csv / .json here
-├── output/              # cleaned results are written here
-├── README.md
-└── LICENSE
+├── output/              # results are written here
+├── README.md            # this file
+└── LICENSE              # MIT License
 ```
 
 ---
