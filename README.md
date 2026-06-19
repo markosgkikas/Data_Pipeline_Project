@@ -125,6 +125,10 @@ p.remove_duplicates()
 p.handle_missing("bathrooms", strategy="median")
 cleaned, outliers = p.clean_outliers(p.df, "price")
 DataPipeline.export_csv(cleaned, "output/cleaned_data.csv")
+schema = DataPipeline.infer_sql_schema(p.df, "house_listings")
+engine = DataPipeline.get_db_engine(prompt_credentials=True)
+DataPipeline.store_dataframe(p.df, "my_table", engine)
+df = DataPipeline.query_to_dataframe("SELECT * FROM my_table", engine)
 ```
 
 ### One-call run with the `run()` orchestrator
@@ -141,11 +145,13 @@ config = {
     "categorical_cols": ["location", "energy_class"],
     "categorical_case": "title",
     "standardize_dates": True,
-    "boolean_cols":     None,                  # None = auto-detect; omit to skip
-    "drop_duplicates":  True,                  # or {"subset": ["id"], "keep": "first"}
+    "boolean_cols":     None,                         # None = auto-detect; omit to skip
+    "drop_duplicates":  True,                         # or {"subset": ["id"], "keep": "first"}
     "missing":          {"bathrooms": "median"},
     "fill_values":      {"energy_class": "UNKNOWN"},  # used by "constant" strategy
     "outlier_col":      "price",
+    "outlier_path": "output/price_outliers.csv",      # outlier file destination
+    "outlier_table": "price_outliers",                # use this for database destination
 }
 
 p = DataPipeline()
