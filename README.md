@@ -157,11 +157,11 @@ config = {
 p = DataPipeline()
 cleaned, outliers = p.run(
     config,
-    source="file",            # or "database"
-    destination="file",       # or "database"
+    source="file",                                    # or "database"
+    destination="file",                               # or "database"
     input_path="input/data.csv",
     output_path="output/cleaned_data.csv",
-    # source_query=..., dest_table=..., engine=...   # for database I/O
+    # source_query=..., dest_table=..., engine=...    # for database I/O
 )
 ```
 
